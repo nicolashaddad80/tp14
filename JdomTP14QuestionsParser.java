@@ -8,7 +8,7 @@ import org.jdom2.util.IteratorIterable;
 
 import java.io.FileReader;
 
-public class JdomParser {
+public class JdomTP14QuestionsParser {
 
     private static int question1(Document doc) {
 
@@ -118,20 +118,37 @@ public class JdomParser {
     }
 
     private static String question7(Document doc) {
-        return null;
+        String sFilter = "static";
+        int num = 0;
+        StringBuilder myReturnStringBuilder = new StringBuilder();
+        ElementFilter allElements = new ElementFilter(sFilter);
+
+        IteratorIterable<Element> filteredIt = doc.getDescendants(allElements);
+
+        for (Element element : filteredIt) {
+            Element staticAddressIP = element.getChild("address");
+            Element staticNetmaskIP = element.getChild("netmask");
+            myReturnStringBuilder.append(++num).append(" ").append(element.getParentElement().getParentElement().getAttribute("name").getValue()).append(" : \n");
+            myReturnStringBuilder.append("\t").append(staticAddressIP.getName()).append("\t").append(staticAddressIP.getValue()).append("\n");
+            myReturnStringBuilder.append("\t").append(staticNetmaskIP.getName()).append("\t").append(staticNetmaskIP.getValue()).append("\n");
+        }
+
+        return myReturnStringBuilder.toString();
     }
 
     public static void main(String[] args) throws Exception {
         assert args.length > 0;
+        int qNum=0;
         SAXBuilder builder = new SAXBuilder(true);
         Document doc = builder.build(new FileReader(args[0]));
 
-        System.out.println("Nombre interfaces Auto : " + question1(doc));
-        System.out.println("Nombre interfaces definies : " + question2(doc));
-        System.out.println("Noms Des Interfaces auto : \n" + question3(doc));
-        System.out.println("Noms Des Interfaces Autres que auto : \n" + question4(doc));
-        System.out.println("Les adresses des DHCP utilisés sont : \n" + question5(doc));
-        System.out.println("Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc,"5.135.166.254"));
+        System.out.println("Question"+(++qNum)+": Nombre interfaces Auto : " + question1(doc));
+        System.out.println("Question"+(++qNum)+": Nombre interfaces definies : " + question2(doc));
+        System.out.println("Question"+(++qNum)+": Noms Des Interfaces auto : \n" + question3(doc));
+        System.out.println("Question"+(++qNum)+": Noms Des Interfaces Autres que auto : \n" + question4(doc));
+        System.out.println("Question"+(++qNum)+": Les adresses des DHCP utilises sont : \n" + question5(doc));
+        System.out.println("Question"+(++qNum)+": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
+        System.out.println("Question"+(++qNum)+": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
     }
 
 
