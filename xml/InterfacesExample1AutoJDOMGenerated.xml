@@ -21,6 +21,11 @@
       </static>
     </inet>
   </iface>
+  <iface name="eth3">
+    <inet>
+      <dhcp />
+    </inet>
+  </iface>
   <auto>
     <name value="lo" />
   </auto>

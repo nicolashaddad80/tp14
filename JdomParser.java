@@ -67,7 +67,7 @@ public class JdomParser {
         }
 
         return myReturnStringBuilder.toString();
-}
+    }
 
     private static String question5(Document doc) {
 
@@ -95,8 +95,26 @@ public class JdomParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question6(Document doc) {
-        return null;
+    private static String question6(Document doc, String gatewayIpAddress) {
+        String sFilter = "gateway";
+        int num = 0;
+        StringBuilder myReturnStringBuilder = new StringBuilder();
+        ElementFilter allElements = new ElementFilter(sFilter);
+
+        IteratorIterable<Element> filteredIt = doc.getDescendants(allElements);
+
+        for (Element element : filteredIt) {
+            if (element.getValue().equals(gatewayIpAddress)) {
+                Element gatewayIfaceParent = element.getParentElement().getParentElement().getParentElement();
+                myReturnStringBuilder.append(++num);
+                myReturnStringBuilder.append(" ");
+                myReturnStringBuilder.append(gatewayIfaceParent.getName());
+                myReturnStringBuilder.append("\t").append(gatewayIfaceParent.getAttribute("name").getValue());
+                myReturnStringBuilder.append("\n");
+            }
+        }
+
+        return myReturnStringBuilder.toString();
     }
 
     private static String question7(Document doc) {
@@ -113,6 +131,7 @@ public class JdomParser {
         System.out.println("Noms Des Interfaces auto : \n" + question3(doc));
         System.out.println("Noms Des Interfaces Autres que auto : \n" + question4(doc));
         System.out.println("Les adresses des DHCP utilisés sont : \n" + question5(doc));
+        System.out.println("Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc,"5.135.166.254"));
     }
 
 
