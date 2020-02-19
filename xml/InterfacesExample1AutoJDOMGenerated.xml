@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE interfaces SYSTEM "interfaces.dtd">
+
+<interfaces>
+  <iface name="lo">
+    <inet>
+      <loopback />
+    </inet>
+  </iface>
+  <iface name="eth0">
+    <inet>
+      <dhcp />
+    </inet>
+  </iface>
+  <iface name="eth1">
+    <inet>
+      <static>
+        <address>5.135.166.198</address>
+        <netmask>255.255.255.255</netmask>
+        <gateway>5.135.166.254</gateway>
+      </static>
+    </inet>
+  </iface>
+  <auto>
+    <name value="lo />
+  </auto>
+  <auto>
+    <name value="eth0" />
+    <name value="eth1" />
+  </auto>
+</interfaces>
+
