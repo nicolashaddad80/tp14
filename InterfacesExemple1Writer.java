@@ -42,6 +42,7 @@ public class InterfacesExemple1Writer {
 
         Element xmlInet2 = new Element("inet");
         Element xmlDhcp2 = new Element("dhcp");
+        xmlDhcp2.setAttribute(new Attribute("hostname", "inteldhcpserver"));
 
         xmlInet2.addContent(xmlDhcp2);
         xmlIface2.addContent(xmlInet2);
@@ -93,7 +94,12 @@ public class InterfacesExemple1Writer {
         racine.addContent(xmlAuto2);
 
         /*Writing Document*/
-        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-        sortie.output(document, out);
+
+        try {
+            XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+            outputter.output(document, out);
+        } catch (IOException e) {
+            throw new RuntimeException("Erreur sur écriture : ", e);
+        }
     }
 }

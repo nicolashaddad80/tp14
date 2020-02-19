@@ -9,7 +9,7 @@
   </iface>
   <iface name="eth0">
     <inet>
-      <dhcp />
+      <dhcp hostname="inteldhcpserver" />
     </inet>
   </iface>
   <iface name="eth1">
