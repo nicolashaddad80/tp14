@@ -9,7 +9,7 @@
   </iface>
   <iface name="eth0">
     <inet>
-      <dhcp />
+      <dhcp hostname="inteldhcpserver" />
     </inet>
   </iface>
   <iface name="eth1">
@@ -19,6 +19,11 @@
         <netmask>255.255.255.255</netmask>
         <gateway>5.135.166.254</gateway>
       </static>
+    </inet>
+  </iface>
+  <iface name="eth3">
+    <inet>
+      <dhcp />
     </inet>
   </iface>
   <auto>
