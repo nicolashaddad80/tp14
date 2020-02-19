@@ -22,7 +22,7 @@
     </inet>
   </iface>
   <auto>
-    <name value="lo />
+    <name value="lo" />
   </auto>
   <auto>
     <name value="eth0" />
