@@ -122,21 +122,22 @@ public class DomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question6(Document doc) {
+    private static String question6(Document doc, String gatewayIpAddress) {
 
-        String sTagFilter = "iface";
+        String sTagFilter = "gateway";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
 
         var filtredNodeList = doc.getElementsByTagName(sTagFilter);
         for (int i = 0; i < filtredNodeList.getLength(); i++) {
 
-            Node iface = filtredNodeList.item(i);
-            myReturnStringBuilder.append(++num).append(" ").append(iface.getNodeName());
+            Node gateway = filtredNodeList.item(i);
 
-            if (iface.getNodeType() == Node.ELEMENT_NODE) {
-                Element ifaceElem = (Element) iface;
-                myReturnStringBuilder.append("\t").append(ifaceElem.getAttribute("name"));
+
+            if (gateway.getNodeType() == Node.ELEMENT_NODE) {
+                Element ifaceParentElem = (Element) gateway.getParentNode().getParentNode().getParentNode();
+                myReturnStringBuilder.append(++num).append(" ").append(ifaceParentElem.getNodeName());
+                myReturnStringBuilder.append("\t").append(ifaceParentElem.getAttribute("name"));
 
             }
 
@@ -145,77 +146,31 @@ public class DomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-/*
-
-
-    private static String question5(Document doc) {
-
-        String sFilter = "dhcp";
-        int num = 0;
-        StringBuilder myReturnStringBuilder = new StringBuilder();
-        ElementFilter allElements = new ElementFilter(sFilter);
-
-        IteratorIterable<Element> filteredIt = doc.getDescendants(allElements);
-        try {
-            for (Element element : filteredIt) {
-
-                myReturnStringBuilder.append(++num);
-                myReturnStringBuilder.append(" ");
-                myReturnStringBuilder.append(element.getName());
-                myReturnStringBuilder.append("\t").append(element.getAttribute("hostname").getValue());
-                myReturnStringBuilder.append("\n");
-            }
-        } catch (NullPointerException e) {
-                /*Nothing to do as this dhscp hosthame attribute is optional
-                this just means current dhcp Element does not have hostname
-                 */
-     /*   }
-
-        return myReturnStringBuilder.toString();
-
-
-    private static String question6(Document doc, String gatewayIpAddress) {
-        String sFilter = "gateway";
-        int num = 0;
-        StringBuilder myReturnStringBuilder = new StringBuilder();
-        ElementFilter allElements = new ElementFilter(sFilter);
-
-        IteratorIterable<Element> filteredIt = doc.getDescendants(allElements);
-
-        for (Element element : filteredIt) {
-            if (element.getValue().equals(gatewayIpAddress)) {
-                Element gatewayIfaceParent = element.getParentElement().getParentElement().getParentElement();
-                myReturnStringBuilder.append(++num);
-                myReturnStringBuilder.append(" ");
-                myReturnStringBuilder.append(gatewayIfaceParent.getName());
-                myReturnStringBuilder.append("\t").append(gatewayIfaceParent.getAttribute("name").getValue());
-                myReturnStringBuilder.append("\n");
-            }
-        }
-
-        return myReturnStringBuilder.toString();
-    }
 
     private static String question7(Document doc) {
-        String sFilter = "static";
+
+
+        String sTagFilter = "static";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
-        ElementFilter allElements = new ElementFilter(sFilter);
 
-        IteratorIterable<Element> filteredIt = doc.getDescendants(allElements);
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        for (int i = 0; i < filtredNodeList.getLength(); i++) {
 
-        for (Element element : filteredIt) {
-            Element staticAddressIP = element.getChild("address");
-            Element staticNetmaskIP = element.getChild("netmask");
-            myReturnStringBuilder.append(++num).append(" ").append(element.getParentElement().getParentElement().getAttribute("name").getValue()).append(" : \n");
-            myReturnStringBuilder.append("\t").append(staticAddressIP.getName()).append("\t").append(staticAddressIP.getValue()).append("\n");
-            myReturnStringBuilder.append("\t").append(staticNetmaskIP.getName()).append("\t").append(staticNetmaskIP.getValue()).append("\n");
+            Node staticNode = filtredNodeList.item(i);
+            Node staticAddressIP = staticNode.getFirstChild().getNextSibling();
+            Node staticNetmaskIP = staticAddressIP.getNextSibling().getNextSibling();
+
+            myReturnStringBuilder.append(++num).append(" ").append(((Element) staticNode.getParentNode().getParentNode()).getAttribute("name")).append(" : \n");
+            myReturnStringBuilder.append("\t").append(staticAddressIP.getNodeName()).append("\t").append(staticAddressIP.getTextContent()).append("\n");
+            myReturnStringBuilder.append("\t").append(staticNetmaskIP.getNodeName()).append("\t").append(staticNetmaskIP.getTextContent()).append("\n");
+
+            myReturnStringBuilder.append("\n");
         }
 
         return myReturnStringBuilder.toString();
     }
 
-       */
 
     //TODO CLEAN Moove in separated class and decklare this having public static questionN , create methode that builds new Document (Factory builder)
     public static void main(String[] args) throws Exception {
@@ -233,10 +188,9 @@ public class DomTP14QuestionsParser {
             System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
             System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
             System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
-            //System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
-            //System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
+            System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
+            System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
 
-            //new DOMPrinter().printNode(document);
         }
     }
 }
