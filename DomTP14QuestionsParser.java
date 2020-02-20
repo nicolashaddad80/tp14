@@ -1,24 +1,46 @@
 package fr.cnam.tp14;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.filter.ElementFilter;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.util.IteratorIterable;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
-import java.io.FileReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-public class JdomTP14QuestionsParser {
+public class DomTP14QuestionsParser {
+
 
     private static int question1(Document doc) {
+        String sTagFilter = "auto";
+        NodeList filtredNodeList = doc.getElementsByTagName(sTagFilter);
 
-        int nbAuto = 0;
-        IteratorIterable<Element> itAuto = doc.getDescendants(new ElementFilter("auto"));
-        for (Element chapter : itAuto) nbAuto++;
-
-        return nbAuto;
+        return filtredNodeList.getLength();
     }
-
+/*
+    public void printNode(Node n) {
+        if (n.getNodeType() == Node.ELEMENT_NODE) {
+            this.printer.print(n.getNodeName() + " {");
+            this.printer.indent();
+            // attributes
+            NamedNodeMap attrs = n.getAttributes();
+            for (int i = 0; i < attrs.getLength(); i++) {
+                Attr attr = (Attr) attrs.item(i);
+                this.printer.print("[" + attr.getName() + " = " + attr.getValue() + "]");
+            }
+        } else if (n.getNodeType() == Node.TEXT_NODE) {
+            this.printer.print("\"" + n.getNodeValue().trim() + "\"");
+        }
+        // children
+        Node child = n.getFirstChild();
+        while (child != null) {
+            this.printNode(child);
+            child = child.getNextSibling();
+        }
+        // close node
+        if (n.getNodeType() == Node.ELEMENT_NODE) {
+            this.printer.deindent();
+            this.printer.print("}");
+        }
+/*
     private static int question2(Document doc) {
 
         int nbIface = 0;
@@ -90,10 +112,10 @@ public class JdomTP14QuestionsParser {
                 /*Nothing to do as this dhscp hosthame attribute is optional
                 this just means current dhcp Element does not have hostname
                  */
-        }
+     /*   }
 
         return myReturnStringBuilder.toString();
-    }
+
 
     private static String question6(Document doc, String gatewayIpAddress) {
         String sFilter = "gateway";
@@ -136,25 +158,29 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    public static void main(String[] args) throws Exception {
+       */
 
+    public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            System.out.println("Usage : JdomTP14QuestionsParser <nomFichier.xml>");
+            System.out.println("Usage : DOMPrinter <nomFichier>");
         } else {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(args[0]);
 
             int qNum = 0;
-            SAXBuilder builder = new SAXBuilder(true);
-            Document doc = builder.build(new FileReader(args[0]));
-
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + question1(doc));
-            System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
-            System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
-            System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
-            System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
-            System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
-            System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
+            //System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
+            // System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
+            //System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
+            //System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
+            //System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
+            //System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
+
+            //new DOMPrinter().printNode(document);
         }
     }
-
 }
+
 
