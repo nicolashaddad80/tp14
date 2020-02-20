@@ -76,7 +76,6 @@ public class DomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-
     private static String question4(Document doc) {
 
         String sTagFilter = "iface";
@@ -89,40 +88,65 @@ public class DomTP14QuestionsParser {
             Node iface = filtredNodeList.item(i);
             myReturnStringBuilder.append(++num).append(" ").append(iface.getNodeName());
 
-                if (iface.getNodeType() == Node.ELEMENT_NODE) {
-                    Element ifaceElem = (Element) iface;
-                    myReturnStringBuilder.append("\t").append(ifaceElem.getAttribute("name"));
+            if (iface.getNodeType() == Node.ELEMENT_NODE) {
+                Element ifaceElem = (Element) iface;
+                myReturnStringBuilder.append("\t").append(ifaceElem.getAttribute("name"));
 
-                }
+            }
 
             myReturnStringBuilder.append("\n");
         }
         return myReturnStringBuilder.toString();
     }
-/*
-    private static String question4(Document doc) {
 
+    private static String question5(Document doc) {
+
+        String sTagFilter = "dhcp";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
-        ElementFilter allElements = new ElementFilter();
-        String filterIface = "iface";
 
-        IteratorIterable<Element> itAll = doc.getDescendants(allElements);
-        for (Element element : itAll) {
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        for (int i = 0; i < filtredNodeList.getLength(); i++) {
 
-            String currentElementName = element.getName();
-            if (currentElementName.equals(filterIface)) {
-                myReturnStringBuilder.append(++num);
-                myReturnStringBuilder.append(" ");
-                myReturnStringBuilder.append(currentElementName);
+            Node dhcp = filtredNodeList.item(i);
+            myReturnStringBuilder.append(++num).append(" ").append(dhcp.getNodeName());
 
-                myReturnStringBuilder.append("\t").append(element.getAttribute("name").getValue());
-                myReturnStringBuilder.append("\n");
+            if (dhcp.getNodeType() == Node.ELEMENT_NODE) {
+                Element dhcpElem = (Element) dhcp;
+                myReturnStringBuilder.append("\t").append(dhcpElem.getAttribute("hostname"));
+
             }
-        }
 
+            myReturnStringBuilder.append("\n");
+        }
         return myReturnStringBuilder.toString();
     }
+
+    private static String question6(Document doc) {
+
+        String sTagFilter = "iface";
+        int num = 0;
+        StringBuilder myReturnStringBuilder = new StringBuilder();
+
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        for (int i = 0; i < filtredNodeList.getLength(); i++) {
+
+            Node iface = filtredNodeList.item(i);
+            myReturnStringBuilder.append(++num).append(" ").append(iface.getNodeName());
+
+            if (iface.getNodeType() == Node.ELEMENT_NODE) {
+                Element ifaceElem = (Element) iface;
+                myReturnStringBuilder.append("\t").append(ifaceElem.getAttribute("name"));
+
+            }
+
+            myReturnStringBuilder.append("\n");
+        }
+        return myReturnStringBuilder.toString();
+    }
+
+/*
+
 
     private static String question5(Document doc) {
 
@@ -208,7 +232,7 @@ public class DomTP14QuestionsParser {
             System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
             System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
             System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
-            //System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
+            System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
             //System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
             //System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
 
