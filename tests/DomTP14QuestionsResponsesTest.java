@@ -10,7 +10,7 @@ public class DomTP14QuestionsResponsesTest {
 
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
-            System.out.println("Usage : DOMPrinter <nomFichier>");
+            System.out.println("Usage : DomTP14QuestionsResponsesTest <nomFichier>");
         } else {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(false);
