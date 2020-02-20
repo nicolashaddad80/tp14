@@ -12,7 +12,6 @@ public class DomTP14QuestionsParser {
     private static int question1(Document doc) {
         String sTagFilter = "auto";
         NodeList filtredNodeList = doc.getElementsByTagName(sTagFilter);
-
         return filtredNodeList.getLength();
     }
 /*
@@ -40,16 +39,14 @@ public class DomTP14QuestionsParser {
             this.printer.deindent();
             this.printer.print("}");
         }
-/*
+*/
     private static int question2(Document doc) {
 
-        int nbIface = 0;
-        IteratorIterable<Element> itIface = doc.getDescendants(new ElementFilter("iface"));
-        for (Element chapter : itIface) nbIface++;
-
-        return nbIface;
+        String sTagFilter = "iface";
+        NodeList filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        return filtredNodeList.getLength();
     }
-
+/*
     private static String question3(Document doc) {
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
@@ -160,6 +157,7 @@ public class DomTP14QuestionsParser {
 
        */
 
+     //TODO CLEAN Moove in separated class and decklare this having public static questionN , create methode that builds new Document (Factory builder)
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             System.out.println("Usage : DOMPrinter <nomFichier>");
@@ -171,7 +169,7 @@ public class DomTP14QuestionsParser {
 
             int qNum = 0;
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + question1(doc));
-            //System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
+            System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
             // System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
             //System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
             //System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
