@@ -10,9 +10,9 @@ import org.jdom2.util.IteratorIterable;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class JdomTP14QuestionsResponses {
+public class JdomTp14QuestionsResponses {
     /*putting Constructor private to avoid invoking it*/
-    private JdomTP14QuestionsResponses() {
+    private JdomTp14QuestionsResponses() {
     }
 
     public final static int question1(Document doc) {

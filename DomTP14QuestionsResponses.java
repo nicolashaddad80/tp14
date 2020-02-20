@@ -11,13 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 
-public class DomTP14QuestionsResponses {
+public class DomTp14QuestionsResponses {
 
-    private DomTP14QuestionsResponses() {
+    private DomTp14QuestionsResponses() {
     }
 
     /*putting Constructor private to avoid invoking it*/
-
     public final static int question1(Document doc) {
         String sTagFilter = "auto";
         var filtredNodeList = doc.getElementsByTagName(sTagFilter);
