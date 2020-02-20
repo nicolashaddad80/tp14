@@ -2,15 +2,20 @@ package fr.cnam.tp14;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.util.IteratorIterable;
 
 import java.io.FileReader;
+import java.io.IOException;
 
-public class JdomTP14QuestionsParser {
+public class JdomTp14QuestionsResponses {
+    /*putting Constructor private to avoid invoking it*/
+    private JdomTp14QuestionsResponses() {
+    }
 
-    private static int question1(Document doc) {
+    public final static int question1(Document doc) {
 
         int nbAuto = 0;
         IteratorIterable<Element> itAuto = doc.getDescendants(new ElementFilter("auto"));
@@ -19,7 +24,7 @@ public class JdomTP14QuestionsParser {
         return nbAuto;
     }
 
-    private static int question2(Document doc) {
+    public final static int question2(Document doc) {
 
         int nbIface = 0;
         IteratorIterable<Element> itIface = doc.getDescendants(new ElementFilter("iface"));
@@ -28,7 +33,7 @@ public class JdomTP14QuestionsParser {
         return nbIface;
     }
 
-    private static String question3(Document doc) {
+    public final static String question3(Document doc) {
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
         IteratorIterable<Element> itAuto = doc.getDescendants(new ElementFilter("auto"));
@@ -45,7 +50,7 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question4(Document doc) {
+    public final static String question4(Document doc) {
 
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
@@ -69,7 +74,7 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question5(Document doc) {
+    public final static String question5(Document doc) {
 
         String sFilter = "dhcp";
         int num = 0;
@@ -95,7 +100,7 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question6(Document doc, String gatewayIpAddress) {
+    public final static String question6(Document doc, String gatewayIpAddress) {
         String sFilter = "gateway";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
@@ -117,7 +122,7 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    private static String question7(Document doc) {
+    public final static String question7(Document doc) {
         String sFilter = "static";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
@@ -136,21 +141,26 @@ public class JdomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        assert args.length > 0;
-        int qNum=0;
-        SAXBuilder builder = new SAXBuilder(true);
-        Document doc = builder.build(new FileReader(args[0]));
+    /*Internal Factory Class*/
+    public static class Fatory {
 
-        System.out.println("Question"+(++qNum)+": Nombre interfaces Auto : " + question1(doc));
-        System.out.println("Question"+(++qNum)+": Nombre interfaces definies : " + question2(doc));
-        System.out.println("Question"+(++qNum)+": Noms Des Interfaces auto : \n" + question3(doc));
-        System.out.println("Question"+(++qNum)+": Noms Des Interfaces Autres que auto : \n" + question4(doc));
-        System.out.println("Question"+(++qNum)+": Les adresses des DHCP utilises sont : \n" + question5(doc));
-        System.out.println("Question"+(++qNum)+": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
-        System.out.println("Question"+(++qNum)+": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
+        /* Put constructor to private to abvoid invocking it*/
+        private Fatory() {
+        }
+
+        public static Document newInstance(String xmlFileName) {
+
+            SAXBuilder builder = new SAXBuilder(true);
+            Document doc = null;
+            try {
+                doc = builder.build(new FileReader(xmlFileName));
+                return doc;
+            } catch (JDOMException e) {
+                throw new RuntimeException("Erreur dans JDOME : ", e);
+            } catch (IOException e) {
+                throw new RuntimeException("Erreur sur la lectrure du fichier : ", e);
+            }
+        }
     }
-
-
 }
 

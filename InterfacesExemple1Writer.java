@@ -87,7 +87,7 @@ public class InterfacesExemple1Writer {
         Element xmlAuto1 = new Element("auto");
 
         Element xmlAutoName1_1 = new Element("name");
-        xmlAutoName1_1.setAttribute(new Attribute("value","lo"));
+        xmlAutoName1_1.setAttribute(new Attribute("value", "lo"));
 
         xmlAuto1.addContent(xmlAutoName1_1);
         racine.addContent(xmlAuto1);
@@ -96,11 +96,11 @@ public class InterfacesExemple1Writer {
         Element xmlAuto2 = new Element("auto");
 
         Element xmlAutoName2_1 = new Element("name");
-        xmlAutoName2_1.setAttribute(new Attribute("value","eth0"));
+        xmlAutoName2_1.setAttribute(new Attribute("value", "eth0"));
         xmlAuto2.addContent(xmlAutoName2_1);
 
         Element xmlAutoName2_2 = new Element("name");
-        xmlAutoName2_2.setAttribute(new Attribute("value","eth1"));
+        xmlAutoName2_2.setAttribute(new Attribute("value", "eth1"));
         xmlAuto2.addContent(xmlAutoName2_2);
 
         racine.addContent(xmlAuto2);
