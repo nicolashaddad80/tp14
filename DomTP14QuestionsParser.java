@@ -1,7 +1,8 @@
 package fr.cnam.tp14;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,59 +12,92 @@ public class DomTP14QuestionsParser {
 
     private static int question1(Document doc) {
         String sTagFilter = "auto";
-        NodeList filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
         return filtredNodeList.getLength();
     }
-/*
-    public void printNode(Node n) {
-        if (n.getNodeType() == Node.ELEMENT_NODE) {
-            this.printer.print(n.getNodeName() + " {");
-            this.printer.indent();
-            // attributes
-            NamedNodeMap attrs = n.getAttributes();
-            for (int i = 0; i < attrs.getLength(); i++) {
-                Attr attr = (Attr) attrs.item(i);
-                this.printer.print("[" + attr.getName() + " = " + attr.getValue() + "]");
+
+    /*
+        public void printNode(Node n) {
+            if (n.getNodeType() == Node.ELEMENT_NODE) {
+                this.printer.print(n.getNodeName() + " {");
+                this.printer.indent();
+                // attributes
+                NamedNodeMap attrs = n.getAttributes();
+                for (int i = 0; i < attrs.getLength(); i++) {
+                    Attr attr = (Attr) attrs.item(i);
+                    this.printer.print("[" + attr.getName() + " = " + attr.getValue() + "]");
+                }
+            } else if (n.getNodeType() == Node.TEXT_NODE) {
+                this.printer.print("\"" + n.getNodeValue().trim() + "\"");
             }
-        } else if (n.getNodeType() == Node.TEXT_NODE) {
-            this.printer.print("\"" + n.getNodeValue().trim() + "\"");
-        }
-        // children
-        Node child = n.getFirstChild();
-        while (child != null) {
-            this.printNode(child);
-            child = child.getNextSibling();
-        }
-        // close node
-        if (n.getNodeType() == Node.ELEMENT_NODE) {
-            this.printer.deindent();
-            this.printer.print("}");
-        }
-*/
+            // children
+            Node child = n.getFirstChild();
+            while (child != null) {
+                this.printNode(child);
+                child = child.getNextSibling();
+            }
+            // close node
+            if (n.getNodeType() == Node.ELEMENT_NODE) {
+                this.printer.deindent();
+                this.printer.print("}");
+            }
+    */
     private static int question2(Document doc) {
 
         String sTagFilter = "iface";
-        NodeList filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
         return filtredNodeList.getLength();
     }
-/*
+
     private static String question3(Document doc) {
+
+        String sTagFilter = "auto";
         int num = 0;
         StringBuilder myReturnStringBuilder = new StringBuilder();
-        IteratorIterable<Element> itAuto = doc.getDescendants(new ElementFilter("auto"));
-        for (Element auto : itAuto) {
-            myReturnStringBuilder.append(++num);
-            myReturnStringBuilder.append(" ");
-            myReturnStringBuilder.append(auto.getName());
 
-            for (Element name : auto.getChildren("name")) {
-                myReturnStringBuilder.append("\t").append(name.getAttribute("value").getValue());
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        for (int i = 0; i < filtredNodeList.getLength(); i++) {
+            Node auto = filtredNodeList.item(i);
+            myReturnStringBuilder.append(++num).append(" ").append(auto.getNodeName());
+
+
+            Node nameChild = auto.getFirstChild();
+            while (nameChild != null) {
+                //checking before Castring
+                if (nameChild.getNodeType() == Node.ELEMENT_NODE) {
+                    Element nameElem = (Element) nameChild;
+                    myReturnStringBuilder.append("\t").append(nameElem.getAttribute("value"));
+
+                }
+
+                nameChild = nameChild.getNextSibling();
             }
             myReturnStringBuilder.append("\n");
         }
         return myReturnStringBuilder.toString();
     }
 
+  /*          myReturnStringBuilder.append(auto.getNodeName());
+
+            var autoNamesList = auto.getChildNodes();
+
+            for (int j = 0; j < autoNamesList.getLength(); j++) {
+                Node name = autoNamesList.item(j);
+
+                //checking before Castring
+                if (name.getNodeType() == Node.ELEMENT_NODE) {
+                    System.err.println(j+"Nombre iface de cette auto : "+ +autoNamesList.getLength());
+                    Element nameElem = (Element) name;
+                    myReturnStringBuilder.append("\t").append(nameElem.getAttribute("Value"));
+                }
+            }
+            myReturnStringBuilder.append("\n");
+        }
+
+ */
+
+
+/*
     private static String question4(Document doc) {
 
         int num = 0;
@@ -157,7 +191,7 @@ public class DomTP14QuestionsParser {
 
        */
 
-     //TODO CLEAN Moove in separated class and decklare this having public static questionN , create methode that builds new Document (Factory builder)
+    //TODO CLEAN Moove in separated class and decklare this having public static questionN , create methode that builds new Document (Factory builder)
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             System.out.println("Usage : DOMPrinter <nomFichier>");
@@ -170,7 +204,7 @@ public class DomTP14QuestionsParser {
             int qNum = 0;
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + question1(doc));
             System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
-            // System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
+            System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
             //System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
             //System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
             //System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
