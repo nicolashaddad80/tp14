@@ -12,6 +12,8 @@ public class DomTP14QuestionsResponsesTest {
         if (args.length == 0) {
             System.out.println("Usage : DomTP14QuestionsResponsesTest <nomFichier>");
         } else {
+
+            //To clean moove to DomTP14 ... Factory class domDocumentBuilder.newInstance(); Thin TODO Styrategy and factorise the main
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(false);
             DocumentBuilder builder = factory.newDocumentBuilder();
