@@ -3,8 +3,6 @@ package fr.cnam.tp14.tests;
 import fr.cnam.tp14.DomTP14QuestionsResponses;
 import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class DomTP14QuestionsResponsesTest {
 
@@ -13,12 +11,7 @@ public class DomTP14QuestionsResponsesTest {
             System.out.println("Usage : DomTP14QuestionsResponsesTest <nomFichier>");
         } else {
 
-            //To clean moove to DomTP14 ... Factory class domDocumentBuilder.newInstance(); Thin TODO Styrategy and factorise the main
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setValidating(false);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(args[0]);
-
+            Document doc = DomTP14QuestionsResponses.Fatory.newInstance(args[0]);
             int qNum = 0;
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + DomTP14QuestionsResponses.question1(doc));
             System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + DomTP14QuestionsResponses.question2(doc));
