@@ -10,7 +10,6 @@ public class DomTP14QuestionsResponsesTest {
         if (args.length == 0) {
             System.out.println("Usage : DomTP14QuestionsResponsesTest <nomFichier>");
         } else {
-
             Document doc = DomTP14QuestionsResponses.Fatory.newInstance(args[0]);
             int qNum = 0;
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + DomTP14QuestionsResponses.question1(doc));

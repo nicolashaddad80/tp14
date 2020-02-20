@@ -13,34 +13,10 @@ import java.io.IOException;
 
 public class DomTP14QuestionsResponses {
 
-    /*Internal Factory Class*/
-    public static class Fatory {
-
-        /* Put constructor to private to abvoid invocking it*/
-        private Fatory() {
-        }
-
-        public static Document newInstance(String xmlFileName) {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setValidating(false);
-            try {
-                DocumentBuilder builder = factory.newDocumentBuilder();
-
-                return builder.parse(xmlFileName);
-            } catch (ParserConfigurationException e) {
-                throw new RuntimeException("Erreur sur le parseur xml : ", e);
-            } catch (IOException e) {
-                throw new RuntimeException("Erreur sur la lectrure du fichier : ", e);
-            } catch (SAXException e) {
-                throw new RuntimeException("Erreur dans sax : ", e);
-            }
-        }
-    };
-
-    /*putting Constructor private to avoid invoking it*/
-
     private DomTP14QuestionsResponses() {
     }
+
+    /*putting Constructor private to avoid invoking it*/
 
     public final static int question1(Document doc) {
         String sTagFilter = "auto";
@@ -160,6 +136,30 @@ public class DomTP14QuestionsResponses {
             myReturnStringBuilder.append("\n");
         }
         return myReturnStringBuilder.toString();
+    }
+
+    /*Internal Factory Class*/
+    public static class Fatory {
+
+        /* Put constructor to private to abvoid invocking it*/
+        private Fatory() {
+        }
+
+        public static Document newInstance(String xmlFileName) {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(false);
+            try {
+                DocumentBuilder builder = factory.newDocumentBuilder();
+
+                return builder.parse(xmlFileName);
+            } catch (ParserConfigurationException e) {
+                throw new RuntimeException("Erreur sur lors du parsing du fichier : " + xmlFileName, e);
+            } catch (IOException e) {
+                throw new RuntimeException("Erreur sur la lectrure du fichier : ", e);
+            } catch (SAXException e) {
+                throw new RuntimeException("Erreur dans sax : ", e);
+            }
+        }
     }
 }
 

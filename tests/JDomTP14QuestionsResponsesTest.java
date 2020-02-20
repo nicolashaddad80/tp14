@@ -2,21 +2,14 @@ package fr.cnam.tp14.tests;
 
 import fr.cnam.tp14.JdomTP14QuestionsResponses;
 import org.jdom2.Document;
-import org.jdom2.input.SAXBuilder;
-
-import java.io.FileReader;
 
 public class JDomTP14QuestionsResponsesTest {
 
     public static void main(String[] args) throws Exception {
-
         if (args.length == 0) {
             System.out.println("Usage : JdomTP14QuestionsResponsesTest <nomFichier.xml>");
         } else {
-            //To clean moove to JDomTP14 ... Factory class domDocumentBuilder.newInstance();
-            SAXBuilder builder = new SAXBuilder(true);
-            Document doc = builder.build(new FileReader(args[0]));
-
+            Document doc = JdomTP14QuestionsResponses.Fatory.newInstance(args[0]);
             int qNum = 0;
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + JdomTP14QuestionsResponses.question1(doc));
             System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + JdomTP14QuestionsResponses.question2(doc));

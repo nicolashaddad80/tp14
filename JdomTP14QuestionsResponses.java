@@ -2,14 +2,16 @@ package fr.cnam.tp14;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
+import org.jdom2.input.SAXBuilder;
 import org.jdom2.util.IteratorIterable;
 
+import java.io.FileReader;
+import java.io.IOException;
+
 public class JdomTP14QuestionsResponses {
-
-
     /*putting Constructor private to avoid invoking it*/
-
     private JdomTP14QuestionsResponses() {
     }
 
@@ -137,6 +139,28 @@ public class JdomTP14QuestionsResponses {
         }
 
         return myReturnStringBuilder.toString();
+    }
+
+    /*Internal Factory Class*/
+    public static class Fatory {
+
+        /* Put constructor to private to abvoid invocking it*/
+        private Fatory() {
+        }
+
+        public static Document newInstance(String xmlFileName) {
+
+            SAXBuilder builder = new SAXBuilder(true);
+            Document doc = null;
+            try {
+                doc = builder.build(new FileReader(xmlFileName));
+                return doc;
+            } catch (JDOMException e) {
+                throw new RuntimeException("Erreur dans JDOME : ", e);
+            } catch (IOException e) {
+                throw new RuntimeException("Erreur sur la lectrure du fichier : ", e);
+            }
+        }
     }
 }
 
