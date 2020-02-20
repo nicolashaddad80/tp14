@@ -57,9 +57,9 @@ public class DomTP14QuestionsParser {
 
         var filtredNodeList = doc.getElementsByTagName(sTagFilter);
         for (int i = 0; i < filtredNodeList.getLength(); i++) {
+
             Node auto = filtredNodeList.item(i);
             myReturnStringBuilder.append(++num).append(" ").append(auto.getNodeName());
-
 
             Node nameChild = auto.getFirstChild();
             while (nameChild != null) {
@@ -69,7 +69,6 @@ public class DomTP14QuestionsParser {
                     myReturnStringBuilder.append("\t").append(nameElem.getAttribute("value"));
 
                 }
-
                 nameChild = nameChild.getNextSibling();
             }
             myReturnStringBuilder.append("\n");
@@ -77,26 +76,29 @@ public class DomTP14QuestionsParser {
         return myReturnStringBuilder.toString();
     }
 
-  /*          myReturnStringBuilder.append(auto.getNodeName());
 
-            var autoNamesList = auto.getChildNodes();
+    private static String question4(Document doc) {
 
-            for (int j = 0; j < autoNamesList.getLength(); j++) {
-                Node name = autoNamesList.item(j);
+        String sTagFilter = "iface";
+        int num = 0;
+        StringBuilder myReturnStringBuilder = new StringBuilder();
 
-                //checking before Castring
-                if (name.getNodeType() == Node.ELEMENT_NODE) {
-                    System.err.println(j+"Nombre iface de cette auto : "+ +autoNamesList.getLength());
-                    Element nameElem = (Element) name;
-                    myReturnStringBuilder.append("\t").append(nameElem.getAttribute("Value"));
+        var filtredNodeList = doc.getElementsByTagName(sTagFilter);
+        for (int i = 0; i < filtredNodeList.getLength(); i++) {
+
+            Node iface = filtredNodeList.item(i);
+            myReturnStringBuilder.append(++num).append(" ").append(iface.getNodeName());
+
+                if (iface.getNodeType() == Node.ELEMENT_NODE) {
+                    Element ifaceElem = (Element) iface;
+                    myReturnStringBuilder.append("\t").append(ifaceElem.getAttribute("name"));
+
                 }
-            }
+
             myReturnStringBuilder.append("\n");
         }
-
- */
-
-
+        return myReturnStringBuilder.toString();
+    }
 /*
     private static String question4(Document doc) {
 
@@ -205,7 +207,7 @@ public class DomTP14QuestionsParser {
             System.out.println("Question" + (++qNum) + ": Nombre interfaces Auto : " + question1(doc));
             System.out.println("Question" + (++qNum) + ": Nombre interfaces definies : " + question2(doc));
             System.out.println("Question" + (++qNum) + ": Noms Des Interfaces auto : \n" + question3(doc));
-            //System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
+            System.out.println("Question" + (++qNum) + ": Noms Des Interfaces Autres que auto : \n" + question4(doc));
             //System.out.println("Question" + (++qNum) + ": Les adresses des DHCP utilises sont : \n" + question5(doc));
             //System.out.println("Question" + (++qNum) + ": Les interfaces qui utilisent la getway 5.135.166.254 sont : \n" + question6(doc, "5.135.166.254"));
             //System.out.println("Question" + (++qNum) + ": Les netmask et adresses ip des intarfaces definies static sont : \n" + question7(doc));
